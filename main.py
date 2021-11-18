@@ -66,7 +66,7 @@ def _save(data):
             subprocess.call(["echo", f"\n\033[01;33mProcess finished with exit code {returncode1}\033[0m\n"])
         except:
             subprocess.call(["rm", f"{sid}.c"])
-            subprocess.call(["echo", f"\nProcess finished with exit code {returncode}\n"])
+            subprocess.call(["echo", f"\n\033[01;33mProcess finished with exit code {returncode}\033[0m\n"])
     else:
         t = threading.Thread(target=reading(cid, sid))
         t.start()
@@ -107,17 +107,17 @@ def main():
 
 @app.route("/")
 def _main():
-    return render_template("infinato.html", infsrc="")
+    return render_template("infinato.html")
 
 
-@app.route("/infinato")
-def _infinato():
-    return render_template("infinato.html", infsrc=f"INFINATO PAGE REACHED...")
+# @app.route("/infinato")
+# def _infinato():
+#     return render_template("infinato.html", infsrc=f"INFINATO PAGE REACHED...")
 
 
-@app.route("/search")
-def _search():
-    return render_template("infinato.html", infsrc=f"You Searched for {request.args['s']}...")
+# @app.route("/search")
+# def _search():
+#     return render_template("infinato.html", infsrc=f"You Searched for {request.args['s']}...")
 
 
 if __name__ == "__main__":
