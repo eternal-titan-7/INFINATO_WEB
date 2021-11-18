@@ -102,7 +102,7 @@ def connect():
 
 def main():
     port = 80
-    socketio.run(app, debug=True, port=port, ssl_context=("server.crt", "server.key"))
+    socketio.run(app, debug=True, port=port)
 
 
 @app.route("/")
