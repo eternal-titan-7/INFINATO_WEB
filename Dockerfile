@@ -12,4 +12,4 @@ RUN mkdir /INFINATO/
 WORKDIR /INFINATO/
 COPY . /INFINATO/
 RUN pip install -U -r requirements.txt
-CMD gunicorn --bind 0.0.0.0:5000 app:app
+CMD gunicorn app:app
