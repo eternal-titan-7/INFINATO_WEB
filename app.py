@@ -101,7 +101,7 @@ def connect():
 
 
 def main():
-    port = 5000
+    port = 80
     socketio.run(app, debug=True, port=port, ssl_context=("server.crt", "server.key"))
 
 
