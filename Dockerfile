@@ -12,4 +12,4 @@ RUN mkdir /INFINATO/
 WORKDIR /INFINATO/
 COPY . /INFINATO/
 RUN pip install -U -r requirements.txt
-CMD python -m flask run -host=0.0.0.0
+CMD python app.py
