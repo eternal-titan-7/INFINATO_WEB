@@ -1,11 +1,9 @@
 import fcntl
-import logging
 import os
 import pty
 import select
 import struct
 import subprocess
-import sys
 import termios
 import threading
 
