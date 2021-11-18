@@ -102,7 +102,7 @@ def connect():
 
 def main():
     port = 80
-    socketio.run(app, debug=True, port=port)
+    socketio.run(app, debug=True, host="0.0.0.0", port=port)
 
 
 @app.route("/")
