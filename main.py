@@ -66,8 +66,7 @@ def inf_save(data):
             subprocess.call(["rm", f"{sid}.c"])
             subprocess.call(["echo", f"\n\033[01;33mProcess finished with exit code {returncode}\033[0m\n"])
     else:
-        t = threading.Thread(target=reading(cid, sid))
-        t.start()
+        socketio.start_background_task(target=reading(cid, sid))
 
 
 @socketio.on("inf-input", namespace="/inf")
