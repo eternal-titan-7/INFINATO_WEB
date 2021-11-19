@@ -141,26 +141,27 @@
     fit.fit();
     term.resize(15, 50);
 
-    function uuidv4() {
+    /*function uuidv4() {
         return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         );
     }
 
     uuid = uuidv4()
-    console.log("Session ID: " + uuid)
+    console.log("Session ID: " + uuid)*/
 
     fit.fit();
     term.writeln("\033[01;32mWelcome to Infinato Shell\033[01;34m :)\033[0m");
-    {#term.write("\033[01;34m[\033[01;32minfinato\033[01;34m@\033[01;32miterm\033[01;34m]\033[0m$ ");#}
+    //term.write("\033[01;34m[\033[01;32minfinato\033[01;34m@\033[01;32miterm\033[01;34m]\033[0m$ ");
     term.onData((data) => {
         console.log("key pressed in browser:", data);
-        socket.emit("pty-input", {input: data});
+        socket.emit("inf-input", {input: data});
     });
 
-    const socket = io.connect("/pty");
+    const socket = io.connect("/inf");
+    let uuid;
 
-    socket.on("pty-output", function (data) {
+    socket.on("inf-output", function (data) {
         if (data.sid === uuid) {
             console.log("new output received from server:", data.output);
             term.write(data.output);
@@ -168,6 +169,8 @@
     });
 
     socket.on("connect", () => {
+        uuid = socket.io.engine.id;
+        console.log("Session ID : " + uuid);
         fitToscreen();
     });
 
@@ -178,7 +181,7 @@
         fit.fit();
         const dims = {cols: term.cols, rows: term.rows};
         console.log("sending new dimensions to server's pty", dims);
-        socket.emit("resize", dims);
+        socket.emit("inf-resize", dims);
     }
 
     function debounce(func, wait_ms) {
@@ -211,7 +214,7 @@
             })
         });*/
         term.writeln("\033[01;33mWait...\033[0m");
-        socket.emit("save", {code: editor.getValue(), sid: uuid});
+        socket.emit("inf-save", {code: editor.getValue(), sid: uuid});
     }
 </script>
 

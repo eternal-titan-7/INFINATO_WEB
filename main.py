@@ -33,16 +33,16 @@ def reading(cid, sid):
                     os.close(clients[cid]['fd'])
                     clients[cid]['fd'] = None
                     clients[cid]['pid'] = None
-                    socketio.emit("pty-output", {"output": output, "sid": sid}, namespace="/pty")
+                    socketio.emit("inf-output", {"output": output, "sid": sid}, namespace="/inf")
                     active = False
                 else:
-                    socketio.emit("pty-output", {"output": output, "sid": sid}, namespace="/pty")
+                    socketio.emit("inf-output", {"output": output, "sid": sid}, namespace="/inf")
 
     return func
 
 
-@socketio.on("save", namespace="/pty")
-def _save(data):
+@socketio.on("inf-save", namespace="/inf")
+def inf_save(data):
     code = data['code']
     sid = data['sid']
     cid = request.values.to_dict().get('t')
@@ -70,29 +70,29 @@ def _save(data):
         t.start()
 
 
-@socketio.on("pty-input", namespace="/pty")
-def pty_input(data):
+@socketio.on("inf-input", namespace="/inf")
+def inf_input(data):
     client = request.values.to_dict().get('t')
     fd = clients[client].get('fd')
     if fd:
         os.write(fd, data['input'].encode())
 
 
-@socketio.on("resize", namespace="/pty")
-def resize(data):
+@socketio.on("inf-resize", namespace="/inf")
+def inf_resize(data):
     client = request.values.to_dict().get('t')
     fd = clients[client].get('fd')
     if fd:
         set_winsize(fd, data["rows"], data["cols"])
 
 
-@socketio.on("disconnect", namespace="/pty")
+@socketio.on("disconnect", namespace="/inf")
 def disconnect():
     client = request.values.to_dict().get('t')
     clients.pop(client)
 
 
-@socketio.on("connect", namespace="/pty")
+@socketio.on("connect", namespace="/inf")
 def connect():
     cid = request.values.to_dict().get('t')
     clients[cid] = {}
