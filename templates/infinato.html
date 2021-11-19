@@ -14,6 +14,7 @@
     <link rel="stylesheet" data-name="vs/editor/editor.main"
           href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.0/min/vs/editor/editor.main.min.css">
 
+
     <!-- Logo at tab Icon -->
     <link rel="icon" href="../static/cf2.jpg" type="image/jpeg">
 
@@ -25,7 +26,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="https://unpkg.com/jquery.terminal/js/jquery.terminal.min.js"></script>
-    <link href="https://unpkg.com/jquery.terminal/css/jquery.terminal.min.css" rel="stylesheet"/>-->
+    <link href="https://unpkg.com/jquery.terminal/css/jquery.terminal.min.css" rel="stylesheet"/> -->
 
     <title>INFINATO</title>
 </head>
@@ -145,10 +146,10 @@
         return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         );
-    }
+    }*/
 
-    uuid = uuidv4()
-    console.log("Session ID: " + uuid);*/
+    uuid = crypto.randomUUID()
+    console.log("Session ID: " + uuid);
 
     fit.fit();
     term.writeln("\033[01;32mWelcome to Infinato Shell\033[01;34m :)\033[0m");
@@ -159,7 +160,7 @@
     });
 
     const socket = io.connect("/inf");
-    let uuid;
+    //let uuid;
 
     socket.on("inf-output", function (data) {
         if (data.sid === uuid) {
@@ -169,8 +170,8 @@
     });
 
     socket.on("connect", () => {
-        uuid = socket.io.engine.id;
-        console.log("Session ID : " + uuid);
+        /*uuid = socket.io.engine.id;
+        console.log("Session ID : " + uuid);*/
         fitToscreen();
     });
 
