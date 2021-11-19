@@ -12,4 +12,4 @@ RUN mkdir /INFINATO/
 WORKDIR /INFINATO/
 COPY . /INFINATO/
 RUN pip install -U -r requirements.txt
-CMD gunicorn main:app
+CMD gunicorn -k eventlet -w 1 main:app
