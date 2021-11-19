@@ -97,8 +97,7 @@ def connect():
 
 
 def main():
-    port = 5000
-    socketio.run(app, debug=True, port=port)
+    socketio.run(app, debug=True, port=os.environ['PORT'])
 
 
 @app.route("/")
