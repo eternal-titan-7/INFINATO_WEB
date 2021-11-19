@@ -86,19 +86,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.0/min/vs/editor/editor.main.min.js"></script>
 
 <!-- Monaco Editor, Terminal -->
-<div class="container-fluid bg-dark bg-gradient">
-    <div class="row justify-content-center">
-        <div id="codedit" ></div>
-    </div>
-    <div class="row justify-content-center">
-        <div id="codeout" ></div>
+<div class="container-fluid">
+    <div class="container-fluid bg-light">
+        <div class="row justify-content-center" style="border: 1px solid rgba(39,41,43,0.1)">
+            <div class="text-muted text-decoration-underline">
+                Code
+            </div>
+            <div id="codedit"></div>
+        </div>
+        <div class="row justify-content-center" style="border: 1px solid rgba(39,41,43,0.1)">
+            <div class="text-muted text-decoration-underline">
+                Output
+            </div>
+            <div id="codeout"></div>
+        </div>
     </div>
 </div>
 <script>
+    monaco.editor.defineTheme('inf', {
+        base: 'vs',
+        inherit: true,
+        rules: [],
+        colors: {
+            "editor.background": '#F8F9FA'
+        }
+    });
     var editor = monaco.editor.create(document.getElementById('codedit'), {
         value: '//This is a Boilerplate Code by Infinato :)\n#include <stdio.h>\n\nint main() {\n    printf("Hello World\\n");\n    return 0;\n}\n',
         language: 'c',
-        automaticLayout: true
+        automaticLayout: true,
+        theme: "inf"
     });
     /*$('#codeout').terminal(function (command) {
         if (command === "run") {
@@ -131,6 +148,7 @@
     const term = new Terminal({
         cursorBlink: true,
         macOptionIsMeta: true,
+        theme: {background: "#F8F9FA", foreground: "black", cursor: "black"}
     });
 
     const fit = new FitAddon.FitAddon();
@@ -214,7 +232,7 @@
                 socket.emit("pty-input", {input: `gcc ${uuid}.c -o ${uuid}.exe && ./${uuid}.exe\n`});
             })
         });*/
-        term.writeln("\033[01;33mWait...\033[0m");
+        term.writeln("\033[33mWait...\033[0m");
         socket.emit("inf-save", {code: editor.getValue(), sid: uuid});
     }
 </script>

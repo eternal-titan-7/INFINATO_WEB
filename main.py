@@ -60,10 +60,10 @@ def inf_save(data):
             process1 = subprocess.Popen([f"./{sid}.exe"])
             subprocess.call(["rm", f"{sid}.c", f"{sid}.exe"])
             returncode1 = process1.wait()
-            subprocess.call(["echo", f"\n\033[01;33mProcess finished with exit code {returncode1}\033[0m\n"])
+            subprocess.call(["echo", f"\n\033[33mProcess finished with exit code {returncode1}\033[0m\n"])
         except:
             subprocess.call(["rm", f"{sid}.c"])
-            subprocess.call(["echo", f"\n\033[01;33mProcess finished with exit code {returncode}\033[0m\n"])
+            subprocess.call(["echo", f"\n\033[33mProcess finished with exit code {returncode}\033[0m\n"])
     else:
         socketio.start_background_task(target=reading(cid, sid))
 
