@@ -2,3 +2,4 @@
 /templates/test.js
 /test.py
 /venv/*
+/.env

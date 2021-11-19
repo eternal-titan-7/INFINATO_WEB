@@ -5,7 +5,6 @@ import select
 import struct
 import subprocess
 import termios
-import threading
 
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
@@ -107,16 +106,5 @@ def _main():
     return render_template("infinato.html")
 
 
-# @app.route("/infinato")
-# def _infinato():
-#     return render_template("infinato.html", infsrc=f"INFINATO PAGE REACHED...")
-
-
-# @app.route("/search")
-# def _search():
-#     return render_template("infinato.html", infsrc=f"You Searched for {request.args['s']}...")
-
-
 if __name__ == "__main__":
     main()
-    # app.run(debug=True, port=80)
