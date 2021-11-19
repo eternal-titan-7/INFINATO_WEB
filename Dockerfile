@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 RUN apt update && apt upgrade -y
 
-FROM python:latest
+FROM python:3.9.9-slim-buster
 
 RUN python -m venv env
 ENV VIRTUAL_ENV /env
