@@ -12,7 +12,8 @@ from flask_socketio import SocketIO
 clients = dict()
 
 app = Flask(__name__)
-socketio = SocketIO(app, ping_timeout=300)
+app.config['SECRET_KEY'] = 'infinato'
+socketio = SocketIO(app, async_mode="threading", ping_timeout=300)
 
 
 def set_winsize(fd, row, col, xpix=0, ypix=0):
