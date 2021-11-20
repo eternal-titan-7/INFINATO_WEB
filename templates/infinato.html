@@ -176,6 +176,9 @@
         if (data.sid === uuid) {
             console.log("new output received from server:", data.output);
             term.write(data.output);
+            if (data.output.includes("Process finished with exit code")) {
+                savebtn.className = 'btn btn-outline-primary btn-light';
+            }
         }
     });
 
@@ -226,6 +229,7 @@
                 socket.emit("pty-input", {input: `gcc ${uuid}.c -o ${uuid}.exe && ./${uuid}.exe\n`});
             })
         });*/
+        savebtn.className = 'btn btn-primary disabled';
         term.writeln("\033[33mWait...\033[0m");
         socket.emit("inf-save", {code: editor.getValue(), sid: uuid});
     }
