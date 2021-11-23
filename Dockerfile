@@ -1,10 +1,10 @@
-FROM debian:latest
+FROM ubuntu:latest
+
+FROM python:3.9.9-slim-buster
 
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
     build-essential curl wget
-
-FROM python:3.9.9-slim-buster
 
 RUN python -m venv env
 ENV VIRTUAL_ENV /env
