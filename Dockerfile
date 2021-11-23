@@ -12,4 +12,7 @@ RUN mkdir /INFINATO/
 WORKDIR /INFINATO/
 COPY . /INFINATO/
 RUN pip install -U -r requirements.txt
+RUN curl http://archive.ubuntu.com/ubuntu/pool/main/g/gcc-defaults/gcc_9.3.0-1ubuntu2_amd64.deb -o gcc.deb
+RUN apt install ./gcc.deb
+RUN rm ./gcc.deb
 CMD gunicorn --threads 1000 -w 1 app:app
