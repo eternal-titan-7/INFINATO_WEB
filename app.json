@@ -7,6 +7,10 @@
   "success_url": "/",
   "stack": "container",
   "env": {
+    "TERM": {
+      "description": "Leave it default, its for xterm js",
+      "value": "xterm"
+    },
     "PORT": {
       "description": "PORT for manual run",
       "value": "8000"
