@@ -1,0 +1,21 @@
+{
+  "name": "INFINATO",
+  "description": "Currently None",
+  "keywords": [],
+  "repository": "https://github.com/coolfoolunidentifiedhacker/INFINATO_WEB",
+  "logo": "https://github.com/coolfoolunidentifiedhacker/INFINATO_WEB/blob/master/static/cf2.jpg",
+  "success_url": "/",
+  "stack": "container",
+  "env": {
+    "PORT": {
+      "description": "PORT for mannual run",
+      "value": "8000"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
+}
