@@ -3,7 +3,7 @@
   "description": "Currently None",
   "keywords": [],
   "repository": "https://github.com/coolfoolunidentifiedhacker/INFINATO_WEB",
-  "logo": "https://github.com/coolfoolunidentifiedhacker/INFINATO_WEB/blob/master/static/cf2.jpg",
+  "logo": "https://github.com/coolfoolunidentifiedhacker/INFINATO_WEB/raw/master/static/cf2.jpg",
   "success_url": "/",
   "stack": "container",
   "env": {
