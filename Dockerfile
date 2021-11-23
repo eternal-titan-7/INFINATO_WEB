@@ -1,7 +1,8 @@
 FROM ubuntu:latest
 
 RUN apt update && apt upgrade -y
-RUN apt install gcc -y
+
+FROM gcc:latest
 
 FROM python:3.9.9-slim-buster
 
