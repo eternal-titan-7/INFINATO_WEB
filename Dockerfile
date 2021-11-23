@@ -12,5 +12,4 @@ RUN mkdir /INFINATO/
 WORKDIR /INFINATO/
 COPY . /INFINATO/
 RUN pip install -U -r requirements.txt
-RUN mv gcc /env/bin/
 CMD gunicorn --threads 1000 -w 1 app:app
