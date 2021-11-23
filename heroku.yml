@@ -1,5 +1,5 @@
 build:
   docker:
-    worker: Dockerfile
+    web: Dockerfile
 run:
-  worker: gunicorn --threads 1000 -w 1 app:app
+  web: gunicorn --threads 1000 -w 1 app:app
