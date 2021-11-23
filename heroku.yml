@@ -1,0 +1,5 @@
+build:
+  docker:
+    worker: Dockerfile
+run:
+  worker: gunicorn --threads 1000 -w 1 app:app
