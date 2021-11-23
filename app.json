@@ -8,7 +8,7 @@
   "stack": "container",
   "env": {
     "PORT": {
-      "description": "PORT for mannual run",
+      "description": "PORT for manual run",
       "value": "8000"
     }
   },
