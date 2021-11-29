@@ -55,7 +55,7 @@ def inf_save(data):
     client['fd'] = fd
     if pid == 0:
         subprocess.call(["clear"])
-        process = subprocess.Popen(["gcc", f"{sid}.c", "-o", f"{sid}.exe"])
+        process = subprocess.Popen(["gcc", f"{sid}.c", "-o", f"{sid}.exe", "-lm"])
         returncode = process.wait()
         try:
             process1 = subprocess.Popen([f"./{sid}.exe"])
