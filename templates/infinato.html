@@ -77,20 +77,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.0/min/vs/editor/editor.main.min.js"></script>
 
 <!-- Monaco Editor, Terminal -->
-<div class="container-fluid">
-    <div class="container-fluid">
-        <div class="row m-3 border rounded bg-light">
-            <div class="col-2 text-muted border-bottom border-end text-decoration-underline">
-                Code
-            </div>
-            <div id="codedit" class="m-1" style="height: 50vh;"></div>
+<div class="row container-fluid">
+    <div class="card col m-3 border rounded bg-light">
+        <div class="col-4 text-muted text-decoration-underline">
+            Code
         </div>
-        <div class="row m-3 border rounded bg-light">
-            <div class="col-2 text-muted border-bottom border-end text-decoration-underline">
-                Output
-            </div>
-            <div id="codeout" class="m-1" style="height: 50vh"></div>
+        <div id="codedit" class="m-1" style="height: 100vh;"></div>
+    </div>
+    <div class="card col m-3 border rounded bg-light">
+        <div class="col-4 text-muted text-decoration-underline">
+            Output
         </div>
+        <div id="codeout" class="m-1" style="height: 100vh"></div>
     </div>
 </div>
 <script>
