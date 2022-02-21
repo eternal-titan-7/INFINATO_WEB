@@ -45,21 +45,25 @@ def reading(cid, sid):
 def inf_save(data):
     code = data['code']
     sid = data['sid']
+    type = data['type']
     cid = request.values.to_dict().get('t')
     client = clients[cid]
     clients[cid]['sid'] = sid
-    with open(f"{sid}.c", "w") as test:
+    with open(f"{sid}.{type}", "w") as test:
         test.write(code)
     pid, fd = pty.fork()
     client['pid'] = pid
     client['fd'] = fd
     if pid == 0:
         subprocess.call(["clear"])
-        process = subprocess.Popen(["gcc", f"{sid}.c", "-o", f"{sid}.exe", "-lm"])
+        if type == "c":
+            process = subprocess.Popen(["gcc", f"{sid}.{type}", "-o", f"{sid}.exe", "-lm"])
+        elif type == "cpp":
+            process = subprocess.Popen(["g++", f"{sid}.{type}", "-o", f"{sid}.exe", "-lm"])
         returncode = process.wait()
         try:
             process1 = subprocess.Popen([f"./{sid}.exe"])
-            subprocess.call(["rm", f"{sid}.c", f"{sid}.exe"])
+            subprocess.call(["rm", f"{sid}.{type}", f"{sid}.exe"])
             returncode1 = process1.wait()
             subprocess.call(["echo", f"\n\033[33mProcess finished with exit code {returncode1}\033[0m\n"])
         except:
@@ -99,6 +103,16 @@ def connect():
 
 def main():
     socketio.run(app, debug=True, port=os.environ.get('PORT'))
+
+
+@app.route("/c_compiler")
+def _ccom():
+    return render_template("c_compiler.html")
+
+
+@app.route("/cpp_compiler")
+def _cppcom():
+    return render_template("cpp_compiler.html")
 
 
 @app.route("/")

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Monaco Editor CSS -->
+    <link rel="stylesheet" data-name="vs/editor/editor.main"
+          href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.0/min/vs/editor/editor.main.min.css">
+
+
+    <!-- Logo at tab Icon -->
+    <link rel="icon" href="../static/cf2.jpg" type="image/jpeg">
+
+    <link rel="stylesheet" href="https://unpkg.com/xterm@4.15.0/css/xterm.css">
+
+    <!-- jquery -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://unpkg.com/jquery.terminal/js/jquery.terminal.min.js"></script>
+    <link href="https://unpkg.com/jquery.terminal/css/jquery.terminal.min.css" rel="stylesheet"/> -->
+
+    <title>INFINATO</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="../static/cf2.jpg" alt="" width="30" height="30"
+                 class="d-inline-block align-text-top me-1">INFINATO</a>
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" -->
+        <!-- data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" -->
+        <!-- aria-label="Toggle navigation"> -->
+        <!-- <span class="navbar-toggler-icon"></span> -->
+        <!-- </button> -->
+        <!-- <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"> -->
+        <!-- <form class="d-flex" action="/search"> -->
+        <!-- <input class="form-control me-2" type="search" name="s" placeholder="Search" aria-label="Search"> -->
+        <!-- <button class="btn btn-outline-primary btn-light" type="submit">Search</button> -->
+        <button id="save" class="btn btn-outline-primary btn-light" type="button">SAVE & RUN</button>
+                <!-- <button id="run" class="btn btn-outline-primary btn-light" type="button">RUN</button> -->
+        <!-- </form> -->
+    </div>
+</nav>
+
+
+<!-- Require VS Directory -->
+<script>
+    var require = {
+        paths: {
+            "vs": "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.0/min/vs"
+        }
+    };
+</script>
+
+<!-- Xterm JavaScript -->
+<script src="https://unpkg.com/xterm@4.15.0/lib/xterm.js"></script>
+<script src="https://unpkg.com/xterm-addon-fit@0.5.0/lib/xterm-addon-fit.js"></script>
+<script src="https://unpkg.com/xterm-addon-web-links@0.4.0/lib/xterm-addon-web-links.js"></script>
+<script src="https://unpkg.com/xterm-addon-search@0.8.0/lib/xterm-addon-search.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.min.js"></script>
+
+<!-- Monaco Editor JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.0/min/vs/loader.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.0/min/vs/editor/editor.main.nls.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.30.0/min/vs/editor/editor.main.min.js"></script>
+
+<!-- Monaco Editor, Terminal -->
+<div class="row container-fluid">
+    <div class="card col m-3 border rounded bg-light">
+        <div class="text-muted text-decoration-underline">
+            Code
+        </div>
+        <div id="codedit" class="m-1" style="height: 100vh;"></div>
+    </div>
+    <div class="card col m-3 border rounded bg-light">
+        <div class="text-muted text-decoration-underline">
+            Output
+        </div>
+        <div id="codeout" class="m-1" style="height: 100vh"></div>
+    </div>
+</div>
+<script>
+    monaco.editor.defineTheme('inf', {
+        base: 'vs',
+        inherit: true,
+        rules: [],
+        colors: {
+            "editor.background": '#F8F9FA'
+        }
+    });
+    var editor = monaco.editor.create(document.getElementById('codedit'), {
+        value: '//This is a Boilerplate Code by Infinato :)\n#include <stdio.h>\n\nint main() {\n    printf("Hello World\\n");\n    return 0;\n}\n',
+        language: 'c',
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        theme: "inf"
+    });
+    /*$('#codeout').terminal(function (command) {
+        if (command === "run") {
+            // term.exec(["exec main.c"]);
+            fetch(`/exec`, {
+                cache: "no-cache",
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({code: editor.getValue()}),
+            }).then(response => {
+                response.json().then(data => {
+                    this.echo(`Code:\n${data['code']}\nOutput:\n${data['output']}`);
+                })
+            });
+        }
+    }, {
+        greetings: "[[gb;blue;]Welcome to Infinato Terminal :)]",
+        prompt: "[[gbi;yellow;]\[infinato@terminal\\] $ ]",
+        enabled: false,
+        disabled: true,
+        checkArity: false
+    });
+    var runbtn = document.getElementById('run');
+    runbtn.onclick = function () {
+        // console.log("RUN");
+        $('#codeout').terminal().exec(["run"]);
+    }*/
+    const term = new Terminal({
+        cursorBlink: true,
+        macOptionIsMeta: true,
+        theme: {background: "#F8F9FA", foreground: "black", cursor: "black", selection: 'black'}
+    });
+
+    const fit = new FitAddon.FitAddon();
+    term.loadAddon(fit);
+    term.loadAddon(new WebLinksAddon.WebLinksAddon());
+    term.loadAddon(new SearchAddon.SearchAddon());
+
+    term.open(document.getElementById("codeout"));
+    fit.fit();
+    term.resize(15, 50);
+
+    function uuidv4() {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+
+    uuid = uuidv4();
+    console.log("Session ID: " + uuid);
+
+    fit.fit();
+    term.writeln("\033[01;32mWelcome to Infinato Shell\033[01;34m :)\033[0m");
+    //term.write("\033[01;34m[\033[01;32minfinato\033[01;34m@\033[01;32miterm\033[01;34m]\033[0m$ ");
+    term.onData((data) => {
+        console.log("key pressed in browser:", data);
+        socket.emit("inf-input", {input: data});
+    });
+
+    const socket = io.connect("/inf");
+    //let uuid;
+
+    socket.on("inf-output", function (data) {
+        if (data.sid === uuid) {
+            console.log("new output received from server:", data.output);
+            term.write(data.output);
+            if (data.output.includes("Process finished with exit code")) {
+                savebtn.className = 'btn btn-outline-primary btn-light';
+            }
+        }
+    });
+
+    socket.on("connect", () => {
+        /*uuid = socket.io.engine.id;
+        console.log("Session ID : " + uuid);*/
+        fitToscreen();
+    });
+
+    socket.on("disconnect", () => {
+    });
+
+    function fitToscreen() {
+        fit.fit();
+        const dims = {cols: term.cols, rows: term.rows};
+        term.resize(0, 0);
+        term.resize(dims.cols, dims.rows);
+        console.log("sending new dimensions to server's pty", dims);
+        socket.emit("inf-resize", dims);
+    }
+
+    function debounce(func, wait_ms) {
+        let timeout;
+        return function (...args) {
+            const context = this;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait_ms);
+        };
+    }
+
+    const wait_ms = 50;
+    window.onresize = debounce(fitToscreen, wait_ms);
+    var savebtn = document.getElementById('save');
+    savebtn.onclick = function () {
+        // console.log("START");
+        /*fetch(`/save`, {
+            cache: "no-cache",
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({code: editor.getValue(), sid: uuid}),
+        }).then(response => {
+            response.json().then(data => {
+                if (data['output'] !== "SUCCESS") {
+                    alert(data['output']);
+                }
+                socket.emit("pty-input", {input: `gcc ${uuid}.c -o ${uuid}.exe && ./${uuid}.exe\n`});
+            })
+        });*/
+        savebtn.className = 'btn btn-primary disabled';
+        term.writeln("\033[33mWait...\033[0m");
+        socket.emit("inf-save", {code: editor.getValue(), sid: uuid, type: "c"});
+    }
+</script>
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+<!-- Option 2: Separate Popper and Bootstrap JS -->
+<!--
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+-->
+</body>
+
+</html>
