@@ -90,6 +90,7 @@
     </div>
 </div>
 <script>
+    var savebtn = document.getElementById('save');
     monaco.editor.defineTheme('inf', {
         base: 'vs',
         inherit: true,
@@ -212,7 +213,6 @@
 
     const wait_ms = 50;
     window.onresize = debounce(fitToscreen, wait_ms);
-    var savebtn = document.getElementById('save');
     savebtn.onclick = function () {
         // console.log("START");
         /*fetch(`/save`, {
