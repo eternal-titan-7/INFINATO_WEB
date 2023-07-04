@@ -165,6 +165,9 @@
         socket.emit("inf-input", {input: data});
     });
 
+    savebtn.className = 'btn btn-primary disabled';
+    savebtn.innerText = "Connecting...";
+
     const socket = io.connect("/inf");
     //let uuid;
 
@@ -194,6 +197,8 @@
         term.resize(dims.cols, dims.rows);
         console.log("sending new dimensions to server's pty", dims);
         socket.emit("inf-resize", dims);
+        savebtn.className = 'btn btn-outline-primary btn-light';
+        savebtn.innerText = "SAVE & RUN";
     }
 
     function debounce(func, wait_ms) {
